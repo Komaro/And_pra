@@ -11,9 +11,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     EditText input_box;
-    double num_save, oper_num;
+    double num_save, num_oper;
     String operation_symbol;
     Boolean oper_flag = false;
+    Boolean exc_flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,62 +83,67 @@ public class MainActivity extends AppCompatActivity {
 
     public void operation()
     {
-        oper_num = Double.parseDouble(input_box.getText().toString());
-
-        if(oper_num == num_save)
+        if(exc_flag)
         {
-            switch (operation_symbol) {
-                case "+":
-
-                    input_box.setText(Double.toString(num_save + oper_num));
-                    break;
-
-                case "-":
-
-                    input_box.setText(Double.toString(num_save - oper_num));
-                    break;
-
-                case "*":
-
-                    input_box.setText(Double.toString(num_save * oper_num));
-                    break;
-
-                case "/":
-
-                    input_box.setText(Double.toString(num_save / oper_num));
-                    break;
-            }
+            num_oper = Double.parseDouble(input_box.getText().toString());
         }
 
-        num_save = 0;
+        switch (operation_symbol) {
+            case "+":
 
+                input_box.setText(Double.toString(num_save + num_oper));
+                break;
+
+            case "-":
+
+                input_box.setText(Double.toString(num_save - num_oper));
+                break;
+
+            case "*":
+
+                input_box.setText(Double.toString(num_save * num_oper));
+                break;
+
+            case "/":
+
+                input_box.setText(Double.toString(num_save / num_oper));
+                break;
+        }
+
+        num_save = Double.parseDouble(input_box.getText().toString());
+        num_oper = 0;
+
+        exc_flag = false;
     }
 
     public void setting(String oper)
     {
-        operation_symbol = oper;
-
-        if(oper_num == 0)
+        if(num_save != 0 && exc_flag)
         {
-                operation();
+            operation();
 
-                num_save = Double.parseDouble(input_box.getText().toString());
-                oper_num = 0;
+            Toast.makeText(this, "operation", Toast.LENGTH_SHORT).show();
 
-                return;
+            oper_flag = true;
+            operation_symbol = oper;
+            exc_flag = true;
+
+            return;
         }
 
-        num_save = Double.parseDouble(input_box.getText().toString());
+        operation_symbol = oper;
 
+        num_save = Double.parseDouble(input_box.getText().toString());
         oper_flag = true;
+        exc_flag = true;
     }
 
     public void reset()
     {
         input_box.setText("");
-        operation_symbol = "";
-        oper_num = 0;
         num_save = 0;
+        num_oper = 0;
+        operation_symbol = "";
         oper_flag = false;
     }
 }
