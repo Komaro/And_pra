@@ -145,5 +145,6 @@ public class MainActivity extends AppCompatActivity {
         num_oper = 0;
         operation_symbol = "";
         oper_flag = false;
+        exc_flag = false;
     }
 }
