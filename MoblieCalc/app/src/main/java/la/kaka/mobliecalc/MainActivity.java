@@ -1,0 +1,143 @@
+package la.kaka.mobliecalc;
+
+import android.icu.text.DateFormat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText input_box;
+    double num_save, oper_num;
+    String operation_symbol;
+    Boolean oper_flag = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        input_box = (EditText)findViewById(R.id.input_box);
+    }
+
+    public void onClick_num(View target)
+    {
+        Button temp = (Button)target;
+
+        if(oper_flag)
+        {
+            input_box.setText("");
+            oper_flag = false;
+        }
+
+        if(target.getId() == R.id.button_dot)
+        {
+            if(input_box.getText().toString().contains(".") || input_box.getText().toString().equals(""))
+            {
+                return;
+            }
+        }
+
+        input_box.setText(input_box.getText().toString().concat(temp.getText().toString()));
+    }
+
+    public void onClick_oper(View target)
+    {
+        switch(target.getId())
+        {
+            case R.id.button_plu:
+
+                setting("+");
+                break;
+
+            case R.id.button_min:
+
+                setting("-");
+                break;
+
+            case R.id.button_mul:
+
+                setting("*");
+                break;
+
+            case R.id.button_div:
+
+                setting("/");
+                break;
+
+            case R.id.button_del:
+
+                reset();
+                break;
+
+            case R.id.button_equal:
+
+                operation();
+                break;
+        }
+    }
+
+    public void operation()
+    {
+        oper_num = Double.parseDouble(input_box.getText().toString());
+
+        if(oper_num == num_save)
+        {
+            switch (operation_symbol) {
+                case "+":
+
+                    input_box.setText(Double.toString(num_save + oper_num));
+                    break;
+
+                case "-":
+
+                    input_box.setText(Double.toString(num_save - oper_num));
+                    break;
+
+                case "*":
+
+                    input_box.setText(Double.toString(num_save * oper_num));
+                    break;
+
+                case "/":
+
+                    input_box.setText(Double.toString(num_save / oper_num));
+                    break;
+            }
+        }
+
+        num_save = 0;
+
+    }
+
+    public void setting(String oper)
+    {
+        operation_symbol = oper;
+
+        if(oper_num == 0)
+        {
+                operation();
+
+                num_save = Double.parseDouble(input_box.getText().toString());
+                oper_num = 0;
+
+                return;
+        }
+
+        num_save = Double.parseDouble(input_box.getText().toString());
+
+        oper_flag = true;
+    }
+
+    public void reset()
+    {
+        input_box.setText("");
+        operation_symbol = "";
+        oper_num = 0;
+        num_save = 0;
+        oper_flag = false;
+    }
+}
