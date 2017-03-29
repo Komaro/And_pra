@@ -122,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
         {
             operation();
 
-            Toast.makeText(this, "operation", Toast.LENGTH_SHORT).show();
-
             oper_flag = true;
             operation_symbol = oper;
             exc_flag = true;
