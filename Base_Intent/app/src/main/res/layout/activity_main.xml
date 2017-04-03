@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="la.kaka.base_intent.MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여기는 액티비티1입니다"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/button_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이미지 표시 액티비티 열기"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="49dp" />
+</android.support.constraint.ConstraintLayout>
