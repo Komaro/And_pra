@@ -31,7 +31,7 @@
                 android:id="@+id/button_1"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="게임실행"
+                android:text="게임설명"
                 android:textSize="14pt"
                 android:layout_weight="1"
                 android:onClick="onClick"/>
