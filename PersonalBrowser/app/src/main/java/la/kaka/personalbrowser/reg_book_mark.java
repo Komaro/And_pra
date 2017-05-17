@@ -61,10 +61,4 @@ public class reg_book_mark extends AppCompatActivity implements View.OnClickList
             finish();
         }
     }
-
-    @Override
-    public void finish() {
-        db.close();
-        super.finish();
-    }
 }
