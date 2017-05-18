@@ -26,6 +26,7 @@ public class del_book_mark extends AppCompatActivity implements View.OnClickList
     ArrayList<list_item> items = new ArrayList<>();
     ListView del_book_mark_list;
     String select_url;
+    int select_position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class del_book_mark extends AppCompatActivity implements View.OnClickList
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 select_url = (String) parent.getAdapter().getItem(position);
+                select_position = position;
             }
         });
     }
@@ -70,7 +72,13 @@ public class del_book_mark extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v.getId() == R.id.del_button)
         {
-
+            if(!select_url.equals(""))
+            {
+                db.execSQL("DELETE FROM BookMark WHERE url = '" + select_url + "'");
+                items.remove(select_position);
+                del_book_mark_list.clearChoices();
+                adpter.notifyDataSetChanged();
+            }
         }
         else
         {

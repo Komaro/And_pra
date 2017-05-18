@@ -36,18 +36,7 @@ public class Browser extends AppCompatActivity {
         serch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(url.getText().toString().equals(""))
-                {
-                    Toast.makeText(getApplicationContext(), "URL을 입력하세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String input_url = url.getText().toString();
-
-                browser.getSettings().setLoadsImagesAutomatically(true);
-                browser.getSettings().setJavaScriptEnabled(true);
-                browser.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                browser.loadUrl(input_url);
+                serching_page();
             }
         });
     }
@@ -59,6 +48,23 @@ public class Browser extends AppCompatActivity {
 
         return true;
     }
+
+    public void serching_page()
+    {
+        if(url.getText().toString().equals(""))
+        {
+            Toast.makeText(getApplicationContext(), "URL을 입력하세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String input_url = url.getText().toString();
+
+        browser.getSettings().setLoadsImagesAutomatically(true);
+        browser.getSettings().setJavaScriptEnabled(true);
+        browser.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        browser.loadUrl(input_url);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,7 +95,11 @@ public class Browser extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == MARK_CODE) {
-
+            if(resultCode == RESULT_OK)
+            {
+                url.setText(data.getStringExtra("SEND_URL"));
+                serching_page();
+            }
         }
     }
 }

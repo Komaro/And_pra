@@ -76,7 +76,10 @@ public class book_mark extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         if(v.getId() == R.id.view_button)
         {
-
+            Intent intent = new Intent();
+            intent.putExtra("SEND_URL", select_url);
+            setResult(RESULT_OK, intent);
+            finish();
         }
         else
         {
