@@ -22,6 +22,7 @@ public class Browser extends AppCompatActivity {
     EditText url;
     WebView browser;
     SQLiteDatabase db;
+    static final int MARK_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,16 @@ public class Browser extends AppCompatActivity {
                 break;
         }
 
-        startActivity(intent);
+        startActivityForResult(intent, MARK_CODE);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == MARK_CODE) {
+
+        }
     }
 }

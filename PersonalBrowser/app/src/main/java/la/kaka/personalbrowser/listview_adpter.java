@@ -36,7 +36,7 @@ public class listview_adpter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return arr.get(position).name;
+        return arr.get(position).url;
     }
 
     @Override

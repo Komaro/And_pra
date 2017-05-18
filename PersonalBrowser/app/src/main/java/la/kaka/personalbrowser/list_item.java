@@ -6,7 +6,7 @@ package la.kaka.personalbrowser;
 
 public class list_item {
 
-    String name, url, date;
+    public String name, url, date;
 
     list_item(String name, String url, String date)
     {

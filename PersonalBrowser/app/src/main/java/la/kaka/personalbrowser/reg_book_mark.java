@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Administrator on 2017-05-10.
@@ -50,6 +51,8 @@ public class reg_book_mark extends AppCompatActivity implements View.OnClickList
                 db.execSQL("INSERT INTO BookMark VALUES('"  + input_name.getText().toString() +
                         "', '" + input_url.getText().toString() +
                         "', '" + input_date.getText().toString() + "');");
+
+                Toast.makeText(this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
             }
             catch (SQLiteException ex)
             {

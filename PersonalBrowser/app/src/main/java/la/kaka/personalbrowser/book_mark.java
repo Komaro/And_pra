@@ -1,5 +1,6 @@
 package la.kaka.personalbrowser;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -7,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,11 +29,14 @@ public class book_mark extends AppCompatActivity implements View.OnClickListener
     listview_adpter adpter;
     ArrayList<list_item> items = new ArrayList<>();
     ListView book_mark_list;
+    String select_url;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_mark);
+
+        select_url = "";
 
         exit_button = (Button)findViewById(R.id.exit_button);
         view_button = (Button)findViewById(R.id.view_button);
@@ -56,9 +62,15 @@ public class book_mark extends AppCompatActivity implements View.OnClickListener
 
         book_mark_list = (ListView)findViewById(R.id.book_mark_list);
         book_mark_list.setAdapter(adpter);
+
+        book_mark_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                select_url = (String) parent.getAdapter().getItem(position);
+            }
+        });
     }
-
-
 
     @Override
     public void onClick(View v) {

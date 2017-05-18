@@ -26,6 +26,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/book_mark_list"/>
+        android:id="@+id/del_book_mark_list"/>
 
 </LinearLayout>
