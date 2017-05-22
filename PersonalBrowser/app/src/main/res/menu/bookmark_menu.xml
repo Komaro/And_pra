@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/book_mark"
-        android:icon="@mipmap/ic_launcher"
-        android:title="관심사이트 보기"/>
-    <item
-        android:id="@+id/reg_book_mark"
-        android:icon="@mipmap/ic_launcher"
-        android:title="관심사이트 등록"/>
-    <item
-        android:id="@+id/del_book_mark"
-        android:icon="@mipmap/ic_launcher"
-        android:title="관심사이트 삭제"/>
+<item
+    android:id="@+id/book_mark"
+    android:icon="@mipmap/ic_launcher"
+    android:title="관심사이트 보기"/>
+<item
+    android:id="@+id/reg_book_mark"
+    android:icon="@mipmap/ic_launcher"
+    android:title="관심사이트 등록"/>
+<item
+    android:id="@+id/del_book_mark"
+    android:icon="@mipmap/ic_launcher"
+    android:title="관심사이트 삭제"/>
 </menu>
