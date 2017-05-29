@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".Service.ControlService"></service>
+        <service android:name=".Service.ExerciseService"></service>
     </application>
 
 </manifest>

@@ -1,3 +1,16 @@
+/****************************************
+    //Control
+    static final int CONTROL_EX = 1;
+
+    //Action
+    static final int EX_ON = 11;
+    static final int EX_OFF = 12;
+
+    //Log tag
+        binding_msg
+        service_msg
+ *****************************************/
+
 package la.kaka.lifecare;
 
 import android.content.ComponentName;
@@ -5,16 +18,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
-import java.util.ResourceBundle;
+import la.kaka.lifecare.Service.ControlService;
 
-public class MainSetting extends AppCompatActivity {
+public class MainSetting extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
+    //service
     Messenger control_messenger = null;
+    Message send_message;
     boolean bound;
+
+    //view
+    Switch exe_switch;
 
     // Service Binding
     private ServiceConnection control_connection = new ServiceConnection() {
@@ -35,6 +58,11 @@ public class MainSetting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_setting);
+
+        exe_switch = (Switch)findViewById(R.id.exe_switch);
+
+        exe_switch.setOnCheckedChangeListener(this);
+
     }
 
     @Override
@@ -54,6 +82,34 @@ public class MainSetting extends AppCompatActivity {
         {
             unbindService(control_connection);
             bound = false;
+
+            Log.i("binding_msg", "Binding : unbind");
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        //synchronization check
+        if(!bound)
+        {
+            exe_switch.setChecked(bound);
+            return;
+        }
+
+        if(isChecked)
+        {
+            send_message = Message.obtain(null, ControlService.CONTROL_EX, ControlService.EX_ON, 0);
+        }
+        else if(!isChecked)
+        {
+            send_message = Message.obtain(null, ControlService.CONTROL_EX, ControlService.EX_OFF, 0);
+        }
+
+        try {
+            control_messenger.send(send_message);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 }
