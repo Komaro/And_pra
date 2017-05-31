@@ -9,6 +9,7 @@
     //Log tag
         binding_msg
         service_msg
+        exe_msg
  *****************************************/
 
 package la.kaka.lifecare;

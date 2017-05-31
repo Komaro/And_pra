@@ -28,6 +28,19 @@ public class ControlService extends Service {
 
     final Messenger mMessenger = new Messenger(new ControlHandler());
 
+    //Receive Handler
+    Handler exchange_handler = new Handler()    {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+
+    //Service
+    Intent in;
+    Messenger messenger = new Messenger(exchange_handler);
+
     class ControlHandler extends Handler
     {
         @Override
@@ -36,24 +49,21 @@ public class ControlService extends Service {
             {
                 case CONTROL_EX:
 
+                    in = new Intent(getApplicationContext(), ExerciseService.class);
+
                     if(msg.arg1 == EX_ON)
                     {
-
-
-
-                        Log.i("Service_msg", "Service : EXE SERVICE START");
+                        startService(in);
                     }
                     else
                     {
-
-
-
-                        Log.i("Service_msg", "Service : EXE SERVICE STOP");
+                        stopService(in);
                     }
 
                     break;
 
             }
+
             super.handleMessage(msg);
         }
     }
