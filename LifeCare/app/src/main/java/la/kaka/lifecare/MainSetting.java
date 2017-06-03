@@ -14,6 +14,9 @@
 
 package la.kaka.lifecare;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ApplicationErrorReport;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,19 +28,21 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import la.kaka.lifecare.Service.ControlService;
+import la.kaka.lifecare.Service.ExerciseService;
 
-public class MainSetting extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
+public class MainSetting extends AppCompatActivity implements View.OnClickListener{
 
-    //service
+    // service
     Messenger control_messenger = null;
     Message send_message;
     boolean bound;
 
-    //view
+    // view
     Switch exe_switch;
 
     // Service Binding
@@ -46,12 +51,14 @@ public class MainSetting extends AppCompatActivity implements CompoundButton.OnC
         public void onServiceConnected(ComponentName name, IBinder service) {
             control_messenger = new Messenger(service);
             bound = true;
+            Log.i("binding_msg","BINDING : BOUND IS TRUE");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             control_messenger = null;
             bound = false;
+            Log.i("binding_msg","BINDING : BOUND IS FALSE");
         }
     };
 
@@ -61,9 +68,18 @@ public class MainSetting extends AppCompatActivity implements CompoundButton.OnC
         setContentView(R.layout.activity_main_setting);
 
         exe_switch = (Switch)findViewById(R.id.exe_switch);
+        exe_switch.setOnClickListener(this);
 
-        exe_switch.setOnCheckedChangeListener(this);
-
+        // ExerciseService running check
+        if(checkService("la.kaka.lifecare.Service.ExerciseService"))
+        {
+            Log.i("exe_msg", "EXE SERVICE : EXE SERVICE IS RUNNING");
+            exe_switch.setChecked(true);
+        }
+        else
+        {
+            Log.i("exe_msg", "EXE SERVICE : EXE SERVICE IS NOT RUNNING");
+        }
     }
 
     @Override
@@ -84,25 +100,27 @@ public class MainSetting extends AppCompatActivity implements CompoundButton.OnC
             unbindService(control_connection);
             bound = false;
 
-            Log.i("binding_msg", "Binding : unbind");
+            Log.i("binding_msg", "BINDING : UNBIND");
         }
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onClick(View v) {
 
-        //synchronization check
+        Switch temp = (Switch)v;
+
+        // ControlService synchronizing check
         if(!bound)
         {
             exe_switch.setChecked(bound);
             return;
         }
 
-        if(isChecked)
+        if(temp.isChecked())
         {
             send_message = Message.obtain(null, ControlService.CONTROL_EX, ControlService.EX_ON, 0);
         }
-        else if(!isChecked)
+        else if(!temp.isChecked())
         {
             send_message = Message.obtain(null, ControlService.CONTROL_EX, ControlService.EX_OFF, 0);
         }
@@ -112,5 +130,23 @@ public class MainSetting extends AppCompatActivity implements CompoundButton.OnC
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+    }
+
+
+    //Service check
+    public boolean checkService(String service_name)
+    {
+        ActivityManager manager = (ActivityManager)this.getSystemService(Activity.ACTIVITY_SERVICE);
+
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+        {
+            if(service_name.equals(service.service.getClassName()))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,17 +1,13 @@
 package la.kaka.lifecare.Service;
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompatSideChannelService;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Administrator on 2017-05-24.
@@ -61,7 +57,6 @@ public class ControlService extends Service {
                     }
 
                     break;
-
             }
 
             super.handleMessage(msg);
@@ -72,14 +67,8 @@ public class ControlService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
 
-        Log.i("binding_msg", "Binding : bind");
+        Log.i("binding_msg", "BINDING : BIND");
 
         return mMessenger.getBinder();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i("test", "destroy");
-        super.onDestroy();
     }
 }
