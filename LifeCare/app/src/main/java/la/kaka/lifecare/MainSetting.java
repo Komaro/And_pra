@@ -10,6 +10,7 @@
         binding_msg
         service_msg
         exe_msg
+        cal_msg
  *****************************************/
 
 package la.kaka.lifecare;
@@ -28,6 +29,8 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -130,7 +133,6 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -148,5 +150,31 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         }
 
         return false;
+    }
+
+    //Option menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        Log.i("menu_msg", "MENU : MAIN MENU CREATE");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent in = null;
+
+        switch (item.getItemId())
+        {
+            case R.id.exe_menu:
+
+                in = new Intent(this, ExeSch.class);
+                break;
+        }
+
+        startActivity(in);
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -44,6 +43,9 @@ public class ExerciseService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        helper = new DB_Helper(this);
+        db = helper.getReadableDatabase();
         Log.i("exe_msg", "EXE SERVICE : SERVICE START");
     }
 

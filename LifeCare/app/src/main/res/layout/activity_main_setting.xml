@@ -12,36 +12,34 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
+        android:gravity="center"
         >
 
         <Switch
             android:id="@+id/exe_switch"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12pt"
+            android:textSize="17pt"
             android:text="운동 서비스" />
 
         <Switch
             android:id="@+id/mail_switch"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12pt"
+            android:textSize="17pt"
             android:text="문자 서비스" />
 
         <Switch
             android:id="@+id/work_switch"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12pt"
+            android:textSize="17pt"
             android:text="걷기 서비스" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="70dp"
+            android:layout_margin="50dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">

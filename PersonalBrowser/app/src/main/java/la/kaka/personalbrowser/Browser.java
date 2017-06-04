@@ -21,7 +21,6 @@ public class Browser extends AppCompatActivity {
     Button serch_button;
     EditText url;
     WebView browser;
-    SQLiteDatabase db;
     static final int MARK_CODE = 1;
 
     @Override

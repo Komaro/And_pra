@@ -20,12 +20,17 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE ExerciseTime (name TEXT(30), url VARCHAR2(30), date VARCHAR2(20));");
+        db.execSQL("CREATE TABLE ExerciseTime " +
+                   "(num INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                   "date TEXT, " +
+                   "exe TEXT, " +
+                   "time TEXT" +
+                   "switch INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS BookMark");
+        db.execSQL("DROP TABLE IF EXISTS ExerciseTime");
         onCreate(db);
     }
 }
