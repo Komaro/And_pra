@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:divider="@color/colorPrimaryDark"
+        android:dividerPadding="0.5pt"
+        >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="12pt"
+            android:text="시간 설정"
+            android:textStyle="bold"/>
+
+        <TimePicker
+            android:id="@+id/time_select"
+            android:layout_width="wrap_content"
+            android:layout_height="134dp"
+            android:theme="@android:style/Theme.Holo.Light" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/vertical_divider"
+        ></View>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날짜"
+        android:textSize="12pt"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+    <DatePicker
+        android:id="@+id/date_select"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <View style="@style/vertical_divider"></View>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13pt"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="운동" />
+
+    <EditText
+        android:id="@+id/exe_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <Button
+        android:id="@+id/create_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="등록" />
+
 
 </LinearLayout>

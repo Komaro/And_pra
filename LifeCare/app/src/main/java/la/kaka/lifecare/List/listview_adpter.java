@@ -49,7 +49,7 @@ public class listview_adpter extends BaseAdapter {
 
         LayoutInflater inflater = context.getLayoutInflater();
 
-        View rowView = inflater.inflate(R.layout.exelist_view_laytou, null, true);
+        View rowView = inflater.inflate(R.layout.exelist_view_laytout, null, true);
 
         TextView date = (TextView)rowView.findViewById(R.id.date_text);
         TextView exe = (TextView)rowView.findViewById(R.id.exe_text);

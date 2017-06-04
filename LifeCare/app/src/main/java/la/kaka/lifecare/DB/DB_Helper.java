@@ -24,7 +24,7 @@ public class DB_Helper extends SQLiteOpenHelper {
                    "(num INTEGER PRIMARY KEY AUTOINCREMENT, " +
                    "date TEXT, " +
                    "exe TEXT, " +
-                   "time TEXT" +
+                   "time TEXT, " +
                    "switch INTEGER);");
     }
 

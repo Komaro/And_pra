@@ -11,13 +11,13 @@
         service_msg
         exe_msg
         cal_msg
+        db_msg
  *****************************************/
 
 package la.kaka.lifecare;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.ApplicationErrorReport;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -32,11 +32,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import la.kaka.lifecare.Exercise.ExeSch;
 import la.kaka.lifecare.Service.ControlService;
-import la.kaka.lifecare.Service.ExerciseService;
 
 public class MainSetting extends AppCompatActivity implements View.OnClickListener{
 
