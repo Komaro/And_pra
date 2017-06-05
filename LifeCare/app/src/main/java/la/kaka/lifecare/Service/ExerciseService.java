@@ -29,7 +29,7 @@ import la.kaka.lifecare.R;
 public class ExerciseService extends Service {
 
     //Delay (defualt - 61000 ~ 65000)
-    public static final int delay = 3000;
+    public static final int delay = 62000;
 
     //DB
     DB_Helper helper;
@@ -128,8 +128,6 @@ public class ExerciseService extends Service {
 
         Log.i("exe_msg", "EXE SERVICE : SERVICE START");
 
-
-
         player = new MediaPlayer();
         player = MediaPlayer.create(getApplicationContext(), R.raw.default_alarm);
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -145,7 +143,7 @@ public class ExerciseService extends Service {
 
         //Broadcasting receiver
         IntentFilter intentfilter = new IntentFilter();
-        intentfilter.addAction("la.kaka.lifecare.SEND_BROAD_CAST");
+        intentfilter.addAction("la.kaka.lifecare.ALARM_STOP_BROAD_CAST");
 
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -176,8 +174,8 @@ public class ExerciseService extends Service {
         super.onDestroy();
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
 
         handler.postDelayed(work, delay);
         return super.onStartCommand(intent, flags, startId);

@@ -20,8 +20,10 @@
         </activity>
         <activity android:name=".Exercise.ExeSch" android:screenOrientation="portrait"></activity>
         <activity android:name=".Exercise.ExeReg" android:screenOrientation="portrait"></activity>
-        <service android:name=".Service.ControlService" android:screenOrientation="portrait"></service>
-        <service android:name=".Service.ExerciseService" android:screenOrientation="portrait"></service>
+        <service android:name=".Service.ControlService"></service>
+        <service android:name=".Service.ExerciseService"></service>
+        <service android:name=".Service.WalkingService"></service>
+
     </application>
 
 </manifest>

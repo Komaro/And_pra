@@ -13,30 +13,27 @@ import android.util.Log;
  * Created by Administrator on 2017-05-24.
  */
 
+//This Service Is Meaningless, Need Fix
 public class ControlService extends Service {
 
     //Control
     public static final int CONTROL_EX = 1;
+    public static final int CONTROL_WO = 2;
 
     //Action
+    //Exercise
     public static final int EX_ON = 11;
     public static final int EX_OFF = 12;
+    //Working
+    public static final int WORKING_ON = 21;
+    public static final int WORKING_OFF = 22;
 
     final Messenger mMessenger = new Messenger(new ControlHandler());
 
-    //Receive Handler
-    Handler exchange_handler = new Handler()    {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
-
     //Service
     Intent in;
-    Messenger messenger = new Messenger(exchange_handler);
 
+    // Control Service
     class ControlHandler extends Handler
     {
         @Override
@@ -52,6 +49,21 @@ public class ControlService extends Service {
                         startService(in);
                     }
                     else if(msg.arg1 == EX_OFF)
+                    {
+                        stopService(in);
+                    }
+
+                    break;
+
+                case CONTROL_WO:
+
+                    in = new Intent(getApplicationContext(), WalkingService.class);
+
+                    if(msg.arg1 == WORKING_ON)
+                    {
+                        startService(in);
+                    }
+                    else if(msg.arg1 == WORKING_OFF)
                     {
                         stopService(in);
                     }

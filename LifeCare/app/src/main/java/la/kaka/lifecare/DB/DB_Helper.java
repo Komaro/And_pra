@@ -25,11 +25,15 @@ public class DB_Helper extends SQLiteOpenHelper {
                    "exe TEXT, " +
                    "time TEXT, " +
                    "switch INTEGER);");
+
+        db.execSQL("CREATE TABLE Walking (date TEXT PRIMARY KEY, " +
+                   "count INTEGER)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS ExerciseTime");
+        db.execSQL("DROP TABLE IF EXISTS Working");
         onCreate(db);
     }
 }

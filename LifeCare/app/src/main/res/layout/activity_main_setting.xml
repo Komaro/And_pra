@@ -9,42 +9,82 @@
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
         android:gravity="center"
-        >
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-        <Switch
-            android:id="@+id/exe_switch"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="17pt"
-            android:text="운동 서비스" />
+            android:orientation="horizontal">
 
-        <Switch
-            android:id="@+id/mail_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17pt"
-            android:text="문자 서비스" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
 
-        <Switch
-            android:id="@+id/work_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17pt"
-            android:text="걷기 서비스" />
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="운동 서비스"
+                    android:textSize="12pt" />
+
+                <Switch
+                    android:id="@+id/exe_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="걷기 서비스"
+                    android:textSize="12pt" />
+
+                <Switch
+                    android:id="@+id/walk_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View style="@style/vertical_divider"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="50dp"
+            android:layout_margin="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="17pt"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/textView4"
@@ -63,11 +103,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/work_view"
+                    android:id="@+id/walk_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
+                    android:text="-"
                     android:textSize="20pt" />
 
                 <TextView
@@ -103,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text=""
+                    android:text="-"
                     android:textSize="20pt" />
 
                 <TextView
@@ -118,12 +158,16 @@
 
             </LinearLayout>
 
+            <View style="@style/vertical_divider"></View>
+
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/reset_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RESET" />
+                android:text="RESET"
+                android:textSize="14pt"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </LinearLayout>
