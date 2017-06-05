@@ -27,7 +27,9 @@
             <ListView
                 android:id="@+id/exe_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:listSelector="@android:color/darker_gray"
+                />
 
         </LinearLayout>
 

@@ -85,6 +85,15 @@ public class ExeReg extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), date + "\n" + time + "에 등록되었습니다.", Toast.LENGTH_SHORT).show();
 
                     Log.i("db_msg", "DATA BASE : CREATE SUCCESS");
+
+
+                    //Sending Close Activity Code to ExeSch
+                    Intent in = new Intent();
+
+                    in.putExtra("SEND_CLOSE", 1);
+                    setResult(RESULT_OK, in);
+
+                    finish();
                 }
                 catch (SQLiteException ex)
                 {

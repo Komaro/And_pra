@@ -12,6 +12,7 @@
         exe_msg
         cal_msg
         db_msg
+        alarm_msg
  *****************************************/
 
 package la.kaka.lifecare;
@@ -20,12 +21,14 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,6 +84,32 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         else
         {
             Log.i("exe_msg", "EXE SERVICE : EXE SERVICE IS NOT RUNNING");
+        }
+
+        //Alarm Dialog
+        try {
+            Intent in = getIntent();
+            if (in != null) {
+                if (in.getExtras().getBoolean("alarm_dialog")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("알람을 종료하시겠습니까?");
+                    builder.setPositiveButton("종료", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            alarm_stop_broadcasting();
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Log.i("alarm_msg", "ALARM : ALARM DIALOG EXCEPTION - " +  ex.getMessage().toString());
         }
     }
 
@@ -175,5 +204,13 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
 
         startActivity(in);
         return super.onOptionsItemSelected(item);
+    }
+
+    //Alarm Stop Broadcasting
+    private void alarm_stop_broadcasting()
+    {
+        Intent in = new Intent("la.kaka.lifecare.SEND_BROAD_CAST");
+        in.putExtra("stopping", true);
+        sendBroadcast(in);
     }
 }

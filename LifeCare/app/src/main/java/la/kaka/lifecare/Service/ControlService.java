@@ -51,7 +51,7 @@ public class ControlService extends Service {
                     {
                         startService(in);
                     }
-                    else
+                    else if(msg.arg1 == EX_OFF)
                     {
                         stopService(in);
                     }

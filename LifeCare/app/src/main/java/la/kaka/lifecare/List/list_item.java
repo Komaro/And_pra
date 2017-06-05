@@ -7,11 +7,13 @@ package la.kaka.lifecare.List;
 public class list_item {
 
     public String date, exe, time;
+    public int activation_check;
 
-    public list_item(String date, String exe, String time)
+    public list_item(String date, String exe, String time, int activation_check)
     {
         this.date = date;
         this.exe = exe;
         this.time = time;
+        this.activation_check = activation_check;
     }
 }

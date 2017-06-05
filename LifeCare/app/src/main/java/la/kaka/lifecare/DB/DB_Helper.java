@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB_Helper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "BOOK_MARK";
+    private static final String DB_NAME = "LIFE CARE";
     private static final int DB_VERSION = 2;
 
     public DB_Helper(Context context)
@@ -20,9 +20,8 @@ public class DB_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE ExerciseTime " +
-                   "(num INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                   "date TEXT, " +
+        db.execSQL("CREATE TABLE ExerciseTime (" +
+                   "date TEXT PRIMARY KEY, " +
                    "exe TEXT, " +
                    "time TEXT, " +
                    "switch INTEGER);");
