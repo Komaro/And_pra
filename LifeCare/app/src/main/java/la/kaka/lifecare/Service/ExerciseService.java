@@ -29,7 +29,7 @@ import la.kaka.lifecare.R;
 public class ExerciseService extends Service {
 
     //Delay (defualt - 61000 ~ 65000)
-    public static final int delay = 5000;
+    public static final int delay = 61000;
 
     //DB
     DB_Helper helper;
