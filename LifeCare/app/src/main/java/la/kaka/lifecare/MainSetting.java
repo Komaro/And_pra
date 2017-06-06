@@ -75,9 +75,10 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
     Button reset_button;
     TextView date_text;
 
-    // Working Service Broadcasting
+    // Walking & Exercise Service Broadcasting
     BroadcastReceiver mReceiver;
     TextView walk_view, length_view;
+    Intent in;
 
     // Service Binding
     private ServiceConnection control_connection = new ServiceConnection() {
@@ -146,16 +147,25 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
 
         // Alarm Dialog
         try {
-            Intent in = getIntent();
-            if (in != null) {
-                if (in.getExtras().getBoolean("alarm_dialog")) {
+            this.in = getIntent();
+            if (this.in != null) {
+                if (this.in.getExtras().getBoolean("alarm_dialog"))
+                {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage("알람을 종료하시겠습니까?");
                     builder.setPositiveButton("종료", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            alarm_stop_broadcasting();
+                            if(in.getExtras().getBoolean("short_gap"))
+                            {
+                                alarm_stop_broadcasting(true);
+                            }
+                            else
+                            {
+                                alarm_stop_broadcasting(false);
+                            }
+
                             dialog.dismiss();
                         }
                     });
@@ -291,10 +301,18 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
     }
 
     // Alarm Stop Broadcasting
-    private void alarm_stop_broadcasting()
+    private void alarm_stop_broadcasting(boolean short_check)
     {
         Intent in = new Intent("la.kaka.lifecare.ALARM_STOP_BROAD_CAST");
         in.putExtra("stopping", true);
+        if(short_check)
+        {
+            in.putExtra("alarm_close", true);
+        }
+        else
+        {
+            in.putExtra("alarm_close", false);
+        }
         sendBroadcast(in);
     }
 

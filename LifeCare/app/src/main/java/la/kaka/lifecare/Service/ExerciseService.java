@@ -29,7 +29,7 @@ import la.kaka.lifecare.R;
 public class ExerciseService extends Service {
 
     //Delay (defualt - 61000 ~ 65000)
-    public static final int delay = 62000;
+    public static final int delay = 5000;
 
     //DB
     DB_Helper helper;
@@ -43,6 +43,11 @@ public class ExerciseService extends Service {
     BroadcastReceiver mReceiver;
 
     //Timer
+    Date time;
+    SimpleDateFormat sdf_date;
+    SimpleDateFormat sdf_time;
+    String date;
+
     Runnable work = new Runnable() {
         @Override
         public void run() {
@@ -50,13 +55,6 @@ public class ExerciseService extends Service {
             Log.i("exe_msg", "EXE SERVICE : LOOP");
 
             cursor = db.rawQuery("SELECT * FROM ExerciseTime", null);
-
-            Date time = new Date();
-
-            SimpleDateFormat sdf_date = new SimpleDateFormat("yyyy-M-d");
-            SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
-
-            String date = sdf_date.format(time);
 
             Log.i("alarm_msg", "ALARM : " + date + " " + sdf_time.format(time));
 
@@ -91,16 +89,19 @@ public class ExerciseService extends Service {
                             if (check_time == 10)
                             {
                                 alarm_play((float) 0.5);
+                                in.putExtra("short_gap",false);
                                 startActivity(in);
                             }
                             else if (check_time == 5)
                             {
                                 alarm_play((float) 0.75);
+                                in.putExtra("short_gap",false);
                                 startActivity(in);
                             }
                             else if (check_time > -5 && check_time < 1)
                             {
                                 alarm_play((float) 1);
+                                in.putExtra("short_gap",true);
                                 startActivity(in);
                             }
                         }
@@ -157,6 +158,12 @@ public class ExerciseService extends Service {
                         e.printStackTrace();
                     }
                     count = 0;
+
+                    if(intent.getExtras().getBoolean("alarm_close"))
+                    {
+                        db.execSQL("UPDATE ExerciseTime SET switch = 0 WHERE date = '" + date + "'");
+                        Log.i("exe_msg", "EXE SERVICE : ALARM COLSE");
+                    }
                 }
             }
         };
@@ -174,8 +181,13 @@ public class ExerciseService extends Service {
         super.onDestroy();
     }
 
-        @Override
-        public int onStartCommand(Intent intent, int flags, int startId) {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        time = new Date();
+        sdf_date = new SimpleDateFormat("yyyy-M-d");
+        sdf_time = new SimpleDateFormat("HH:mm");
+        date = sdf_date.format(time);
 
         handler.postDelayed(work, delay);
         return super.onStartCommand(intent, flags, startId);
