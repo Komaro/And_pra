@@ -28,12 +28,17 @@ public class DB_Helper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE Walking (date TEXT PRIMARY KEY, " +
                    "count INTEGER)");
+
+        db.execSQL("CREATE TABLE Marker (num INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, long REAL, lati REAL)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL("DROP TABLE IF EXISTS ExerciseTime");
         db.execSQL("DROP TABLE IF EXISTS Working");
+        db.execSQL("DROP TABLE IF EXISTS Marker");
+
         onCreate(db);
     }
 }

@@ -19,6 +19,7 @@
         working_msg
         location_msg
         permission_msg
+        marker_msg
  *****************************************/
 
 package la.kaka.lifecare;
@@ -36,11 +37,13 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -53,6 +56,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -78,7 +82,7 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
     boolean bound;
 
     // view
-    Switch exe_switch, work_switch;
+    Switch exe_switch, walk_switch;
     Button reset_button;
     TextView date_text;
 
@@ -110,14 +114,14 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_main_setting);
 
         exe_switch = (Switch)findViewById(R.id.exe_switch);
-        work_switch = (Switch)findViewById(R.id.walk_switch);
+        walk_switch = (Switch)findViewById(R.id.walk_switch);
         walk_view = (TextView)findViewById(R.id.walk_view);
         length_view = (TextView)findViewById(R.id.length_view);
         reset_button = (Button)findViewById(R.id.reset_button);
         date_text = (TextView)findViewById(R.id.date_text);
 
         exe_switch.setOnClickListener(this);
-        work_switch.setOnClickListener(this);
+        walk_switch.setOnClickListener(this);
         reset_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +145,7 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
 
         // Service running check
         checkService("la.kaka.lifecare.Service.ExerciseService", exe_switch);
-        checkService("la.kaka.lifecare.Service.WalkingService", work_switch);
+        checkService("la.kaka.lifecare.Service.WalkingService", walk_switch);
 
         // Working Service Broadcasting receiver
         IntentFilter intentfilter = new IntentFilter();
@@ -262,6 +266,23 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
 
                 if(temp.isChecked())
                 {
+                    LocationManager lmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                    // Check GPS
+                    if(!lmanager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+                        Toast.makeText(getApplicationContext(), "GPS를 설정해 주세요", Toast.LENGTH_SHORT).show();
+
+                        walk_switch.setChecked(false);
+
+                        return;
+                    }
+
                     send_message = Message.obtain(null, ControlService.CONTROL_WO, ControlService.WORKING_ON, 0);
                 }
                 else if(!temp.isChecked())

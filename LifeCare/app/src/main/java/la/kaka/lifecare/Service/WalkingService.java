@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -77,8 +78,19 @@ public class WalkingService extends Service implements SensorEventListener {
             Toast.makeText(getApplicationContext(), "LOCATION CHANGE : " + location.getLongitude() + " " + location.getLatitude(), Toast.LENGTH_SHORT);
             Log.i("location_msg", "LOCATION CHANGE: " + location.getLongitude() + " " + location.getLatitude());
 
+            try {
 
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+                db.execSQL("INSERT INTO Marker(date, long, lati) VALUES ('" + sdf.format(date) + "', "+ location.getLongitude()  +", " + location.getLatitude() + ")");
+
+                Log.i("location_msg", "LCOATION : " + sdf.format(date) + " LONG - " + location.getLongitude() + "LATI - " + location.getLatitude());
+            }
+            catch(SQLiteException ex)
+            {
+                Log.i("location_msg", "LOCATION : " + ex.getMessage());
+            }
         }
 
         @Override
@@ -91,15 +103,6 @@ public class WalkingService extends Service implements SensorEventListener {
         public void onProviderDisabled(String provider) {       }
     };
 
-    //
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-        }
-    };
-
-    Handler handler = new Handler();
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -110,10 +113,6 @@ public class WalkingService extends Service implements SensorEventListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         Log.i("msg", "START SERVICE");
-
-        if (accelerometerSensor != null) {
-            sensorManager.registerListener(this, accelerometerSensor, sensorManager.SENSOR_DELAY_GAME);
-        }
 
         return START_STICKY;
     }
@@ -199,7 +198,6 @@ public class WalkingService extends Service implements SensorEventListener {
             }
         };
 
-
         // Location Service Start
         lmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -209,9 +207,13 @@ public class WalkingService extends Service implements SensorEventListener {
         lmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, location_listner);
         lmanager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, location_listner);
 
-        Location loc = lmanager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location loc = lmanager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         Log.i("location_msg", "START LOCATION : " + loc.getLongitude() + " " + loc.getLatitude());
+
+        if (accelerometerSensor != null) {
+            sensorManager.registerListener(this, accelerometerSensor, sensorManager.SENSOR_DELAY_GAME);
+        }
 
         registerReceiver(mReceiver, intentfilter);
 
@@ -223,10 +225,13 @@ public class WalkingService extends Service implements SensorEventListener {
         super.onDestroy();
 
         Log.i("msg", "END SERVICE");
+
         if(sensorManager != null)
         {
             sensorManager.unregisterListener(this);
         }
+
+        unregisterReceiver(mReceiver);
 
         try
         {
