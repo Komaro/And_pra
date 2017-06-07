@@ -5,4 +5,7 @@
     <item android:title="운동 일정"
           android:id="@+id/exe_menu"
           android:orderInCategory="100"/>
+    <item android:title="활동 기록"
+        android:id="@+id/map_menu"
+        android:orderInCategory="100"/>
 </menu>

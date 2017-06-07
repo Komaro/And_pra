@@ -17,10 +17,13 @@
         db_msg
         alarm_msg
         working_msg
+        location_msg
+        permission_msg
  *****************************************/
 
 package la.kaka.lifecare;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -30,12 +33,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -118,6 +125,20 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
             }
         });
 
+        // Permission Check
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            Log.i("permission_msg", "PERMISSION : CHECK");
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                                Manifest.permission.ACCESS_COARSE_LOCATION}, 1234);
+                Log.i("permission", "PERMISSION : REQUEST PERMISSION");
+            }
+        }
+
         // Service running check
         checkService("la.kaka.lifecare.Service.ExerciseService", exe_switch);
         checkService("la.kaka.lifecare.Service.WalkingService", work_switch);
@@ -125,6 +146,7 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         // Working Service Broadcasting receiver
         IntentFilter intentfilter = new IntentFilter();
         intentfilter.addAction("la.kaka.lifecare.WORK_BROAD_CAST");
+
 
         mReceiver = new BroadcastReceiver() {
             @Override
@@ -294,6 +316,11 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
 
                 in = new Intent(this, ExeSch.class);
                 break;
+
+            case R.id.map_menu:
+
+                in = new Intent(this, MapMarker.class);
+                break;
         }
 
         startActivity(in);
@@ -340,5 +367,14 @@ public class MainSetting extends AppCompatActivity implements View.OnClickListen
         {
             Log.i("walking_msg","WALKING : RESET - " + ex.getMessage());
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 1234)
+        {        }
+        else
+        {        }
     }
 }
