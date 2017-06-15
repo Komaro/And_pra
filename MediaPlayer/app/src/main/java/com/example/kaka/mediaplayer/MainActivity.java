@@ -29,7 +29,6 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-
     public final Handler httphandle = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -108,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
         // SERVER URL
         String url = "http://108.61.200.205/request_playlist.php";
-        int param = 1;
-        String message = "";
 
         new CallHttp(url, httphandle).start();
 }
