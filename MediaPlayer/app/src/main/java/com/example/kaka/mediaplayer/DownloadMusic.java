@@ -5,12 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.Externalizable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -71,7 +68,6 @@ public class DownloadMusic extends AsyncTask {
             connection.setUseCaches(false);
             connection.setDefaultUseCaches(false);
             connection.setConnectTimeout(10000);
-
 
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
